@@ -32,11 +32,11 @@ Userid;Post
 ## Architect 
 
 ### i have defined three job : Job1,Job2,Job3, each job contains one Map/Reduce calculation, these 3 jobs will be launched one by one from Job1 to Job3.
-![Architect Show](https://github.com/cong666/githubimage/blob/master/ 	screenshot_mr_shema.PNG)
+![Architect Show](https://github.com/cong666/githubimage/blob/master/screenshot_mr_shema.PNG)
 
 
 ##  Fully-distributed Environment
 
 ### I have created the mini distributed environment using 3 Linux Ubuntu VM
 
-![Environement Show](https://github.com/cong666/githubimage/blob/master/screenshot_mr_config.png)
+![Environement Show](https://github.com/cong666/githubimage/blob/master/screenshot_mr_config.PNG)
