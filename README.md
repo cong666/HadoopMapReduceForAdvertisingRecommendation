@@ -44,12 +44,14 @@ Userid;Post
 
 ## OUTPUT 
 Because we have setup 4 partitions so here we have 4 file generated in the folder
-image1
+![Environement Show](https://github.com/cong666/githubimage/blob/master/screenshot_mr_output1.PNG)
+![Environement Show](https://github.com/cong666/githubimage/blob/master/screenshot_mr_output2.PNG)
+![Environement Show](https://github.com/cong666/githubimage/blob/master/screenshot_mr_output3.PNG)
 
 ### cat these 4 files
 ccong@node1:~/Documents/hadoop-2.9.1/bin$ ./hdfs dfs -cat /usr/file/mr/pub/output1/part-r-00000
 
-part-r-00000:    
+- part-r-00000:    
 good_8038983998	1  
 juicer_8039849348	1  
 machine_8039849348	1  
@@ -58,7 +60,7 @@ player_9729784398	1
 restaurant_8038983998	1  
 shoes_7938783749	1  
 today_7938783749	1  
-part-r-00001:  
+- part-r-00001:  
 footer_7973847384	1  
 how_8093800000	1  
 locker_7973847384	1  
@@ -67,7 +69,7 @@ near_7973847384	1
 new_7938783749	1  
 paris_0089089982	1  
 spotify_9729784398	1  
-part-r-00002:  
+- part-r-00002:  
 amazon_8039849348	1  
 blood_8093800000	1  
 nike_7938783749	1  
@@ -77,6 +79,6 @@ reduce_8093800000	1
 store_0089089982	1  
 web_9729784398	1  
 your_8093800000	1  
-part-r-00003:  
+- part-r-00003:  
 count	7  
 
