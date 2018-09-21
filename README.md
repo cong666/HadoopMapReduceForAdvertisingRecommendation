@@ -30,3 +30,6 @@ Userid;Post
   
 
 ## Architect 
+
+### i have defined three job : Job1,Job2,Job3, each job contains one Map/Reduce calculation, these 3 jobs will be launched one by one from Job1 to Job3.
+
