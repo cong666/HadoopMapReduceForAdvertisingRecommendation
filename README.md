@@ -22,7 +22,7 @@ Userid;Post
 0089089982;Nike store paris  
 
 ## Weight calculation
-
+### TF*IDF
   W = TF*Log(N/DF)  
   TF,is the number of occurrences of key words for every user.  
   DF is the number of occurrences of key words in all document  
