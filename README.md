@@ -49,7 +49,12 @@ Because we have setup 4 partitions so here we have 4 file generated in the folde
 ![Environement Show](https://github.com/cong666/githubimage/blob/master/screenshot_mr_output3.PNG)
 
 ### cat these 4 files
+
+#### OUTPUT1
 ccong@node1:~/Documents/hadoop-2.9.1/bin$ ./hdfs dfs -cat /usr/file/mr/pub/output1/part-r-00000
+ccong@node1:~/Documents/hadoop-2.9.1/bin$ ./hdfs dfs -cat /usr/file/mr/pub/output1/part-r-00001
+ccong@node1:~/Documents/hadoop-2.9.1/bin$ ./hdfs dfs -cat /usr/file/mr/pub/output1/part-r-00002
+ccong@node1:~/Documents/hadoop-2.9.1/bin$ ./hdfs dfs -cat /usr/file/mr/pub/output1/part-r-00003
 
 - part-r-00000:    
 good_8038983998	1  
@@ -82,3 +87,57 @@ your_8093800000	1
 - part-r-00003:  
 count	7  
 
+#### OUTPUT2
+ccong@node1:~/Documents/hadoop-2.9.1/bin$ ./hdfs dfs -cat /usr/file/mr/pub/output2/part-r-00000  
+
+amazon	1   
+blood	1  
+footer	1  
+good	1  
+how	1  
+juicer	1  
+locker	1  
+machine	1  
+mobile	1  
+near	1  
+new	1  
+nike	2  
+paris	2  
+player	1  
+pressure	1  
+reduce	1  
+restaurant	1  
+shoes	1  
+spotify	1  
+store	1  
+today	1  
+web	1  
+your	1  
+#### OUTPUT3-Final Result  
+ccong@node1:~/Documents/hadoop-2.9.1/bin$ ./hdfs dfs -cat /usr/file/mr/pub/output3/part-r-00000  
+
+amazon	8039849348:1.94591
+blood	8093800000:1.94591
+footer	7973847384:1.94591
+good	8038983998:1.94591
+how	8093800000:1.94591
+juicer	8039849348:1.94591
+locker	7973847384:1.94591
+machine	8039849348:1.94591
+mobile	9729784398:1.94591
+near	7973847384:1.94591
+new	7938783749:1.94591
+**nike	0089089982:1.09861**   
+**nike	7938783749:1.09861**  
+**paris	8038983998:1.09861**  
+**paris	0089089982:1.09861**  
+player	9729784398:1.94591
+pressure	8093800000:1.94591
+reduce	8093800000:1.94591
+restaurant	8038983998:1.94591
+shoes	7938783749:1.94591
+spotify	9729784398:1.94591
+store	0089089982:1.94591
+today	7938783749:1.94591
+web	9729784398:1.94591
+your	8093800000:1.94591
