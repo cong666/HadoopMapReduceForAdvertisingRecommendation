@@ -10,8 +10,7 @@ import java.util.Iterator;
 /**
  * Created by: ccong
  * Date: 18/9/16 下午10:01
- * 计算DF:某个词汇在所有微博中出现的次数
- * 九阳 3
+ *
  */
 public class MyReduce2 extends Reducer<Text, IntWritable,Text,IntWritable> {
     Logger logger = LoggerFactory.getLogger(MyReduce2.class);
@@ -24,7 +23,7 @@ public class MyReduce2 extends Reducer<Text, IntWritable,Text,IntWritable> {
             IntWritable v = value.next();
             sum = sum+v.get();
         }
-        //计算DF
+        //Calculate the DF
         context.write(key,new IntWritable(sum));
     }
 }

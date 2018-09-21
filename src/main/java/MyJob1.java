@@ -26,12 +26,12 @@ public class MyJob1 {
             job.setOutputKeyClass(Text.class);
             job.setOutputValueClass(IntWritable.class);
 
-            //分4个reduce
+            //use 4 reduce
             job.setNumReduceTasks(4);
             job.setPartitionerClass(MyPartition1.class);
-            //提前创建input文件夹
+            //create the input folder into hdfs
             FileInputFormat.addInputPath(job,new Path("/usr/file/mr/pub/input"));
-            //注意的是不要创建output文件夹
+            //but don't create the output folder
             FileOutputFormat.setOutputPath(job,new Path("/usr/file/mr/pub/output1"));
             //System.exit(job.waitForCompletion(true) ? 0 : 1);
             boolean f = job.waitForCompletion(true);

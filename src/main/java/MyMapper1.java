@@ -18,8 +18,8 @@ public class MyMapper1 extends Mapper<LongWritable, Text,Text, IntWritable> {
 
     Logger logger = LoggerFactory.getLogger(MyMapper1.class);
 
-    //统计每个词在该条微博中出现的次数（TF）
-    //还要统计微博总条数 N
+    //Calculate the TF (the number of occurrences of key words for every user）
+    //Calculate the total number of the line :  N
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String line = value.toString().trim();
         String[] values = line.split(";");
@@ -31,10 +31,10 @@ public class MyMapper1 extends Mapper<LongWritable, Text,Text, IntWritable> {
             Lexeme word = null;
             while((word = iks.next())!=null) {
                 String w = word.getLexemeText();
-                //统计每个词在该条微博中出现的次数（TF）
+                //（TF : The number of occurrences of key words for every user）
                 context.write(new Text(w+"_"+id),new IntWritable(1));
             }
-            //统计微博总条数 N (此处使用相同的key 来计算总条数)
+            //Total number of the lines :  N (we use the same key to calculate the sum)
             context.write(new Text("count"),new IntWritable(1));
         }
     }

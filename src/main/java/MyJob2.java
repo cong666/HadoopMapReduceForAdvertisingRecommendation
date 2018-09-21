@@ -26,9 +26,9 @@ public class MyJob2 {
             job.setReducerClass(MyReduce2.class);
             job.setOutputKeyClass(Text.class);
             job.setOutputValueClass(IntWritable.class);
-            //第一个job的输出作为这个job的输入
+            //Add the output of the first job as the input of this Job
             FileInputFormat.addInputPath(job,new Path("/usr/file/mr/pub/output1"));
-            //注意的是不要创建output文件夹
+            //Don't create the out folder
             FileOutputFormat.setOutputPath(job,new Path("/usr/file/mr/pub/output2"));
             boolean f = job.waitForCompletion(true);
             if(f) {

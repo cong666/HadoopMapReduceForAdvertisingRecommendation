@@ -10,13 +10,12 @@ import java.util.Iterator;
 /**
  * Created by: ccong
  * Date: 18/9/16 下午10:01
- * 第一个job的输出
- * 使用partition将它们分到两个文件中
- * 一个文件存放单词出现的次数
- * 九阳_78347837 2
- * 九阳_29738422 1
- * 另外一个存放微博总数N
- * count 2834
+ * Use partition to separate them into two different file
+ * One file is to save the keyword of every user like : Nike_9279344397 2
+ * Nike_78347837 2
+ * Nike_29738422 1
+ * Another file stock the 'count'
+ * count 32
  */
 public class MyReduce1 extends Reducer<Text, IntWritable,Text,IntWritable> {
     Logger logger = LoggerFactory.getLogger(MyReduce1.class);
@@ -29,7 +28,7 @@ public class MyReduce1 extends Reducer<Text, IntWritable,Text,IntWritable> {
             IntWritable v = value.next();
             sum = sum+v.get();
         }
-        //此处显然可以不用if else 只是让你清楚地看到 reduce可能被调用两次 一次的key是w_id, 一次是count（微博总条数）
+        //sum the 'count' and word_id
         if(key.equals(new Text("count"))) {
             logger.info("Total count :"+sum);
             context.write(key,new IntWritable(sum));

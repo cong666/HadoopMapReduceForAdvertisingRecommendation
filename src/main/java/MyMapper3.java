@@ -1,16 +1,16 @@
+import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.FileSplit;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
-import java.nio.file.Path;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,8 +25,8 @@ public class MyMapper3 extends Mapper<LongWritable, Text,Text, Text> {
 
     Logger logger = LoggerFactory.getLogger(MyMapper3.class);
 
-    public static Map<String,Integer> countMap = null;//"count" : 1213
-    public static Map<String,Integer> dfMap = null;//"Nike": 23
+    public static Map<String,Integer> countMap = new HashMap<>();//"count" : 1213
+    public static Map<String,Integer> dfMap = new HashMap<>();;//"Nike": 23
 
     protected void setup(Context context) throws IOException, InterruptedException {
         if(countMap == null || countMap.size()==0 || dfMap==null || dfMap.size()==0) {
@@ -35,31 +35,38 @@ public class MyMapper3 extends Mapper<LongWritable, Text,Text, Text> {
                and 'DF' cache file : "/usr/file/mr/pub/output1/part-r-00000"
             */
             URI[] uris = context.getCacheFiles();
+            //get the distributed file system and use it to read cached file
+            FileSystem fs = FileSystem.get(context.getConfiguration());
             if(uris!=null) {
                 for(URI uri : uris) {
                     if(uri.getPath().endsWith("part-r-00003")) {
-                        FileReader fr = new FileReader(uri.getPath());
-                        BufferedReader br = new BufferedReader(fr);
+                        //uri.getPath() : /usr/file/mr/pub/output1/part-r-00003
+                        Path path = new Path(uri.getPath());
+                        FSDataInputStream fsin = fs.open(path);
+                        DataInputStream dis = new DataInputStream(fsin);
+                        BufferedReader br = new BufferedReader(new InputStreamReader(dis));
                         String line = br.readLine();
+                        //only one line
                         if(line.startsWith("count")) {
                             String[] arr = line.split("\t");
-                            countMap = new HashMap<>();
                             countMap.put(arr[0],Integer.parseInt(arr[1].trim().toString()));
                         }
                         br.close();
-                        fr.close();
+                        dis.close();
+                        fsin.close();
                     } else if(uri.getPath().endsWith("part-r-00000")) {
-                        dfMap = new HashMap<>();
-                        FileReader fr = new FileReader(uri.getPath());
-                        BufferedReader br = new BufferedReader(fr);
-                        String line = br.readLine();
-                        if(line.startsWith("count")) {
+                        Path path = new Path(uri.getPath());
+                        FSDataInputStream fsin = fs.open(path);
+                        DataInputStream dis = new DataInputStream(fsin);
+                        BufferedReader br = new BufferedReader(new InputStreamReader(dis));
+                        String line = null;
+                        while((line = br.readLine())!=null){
                             String[] arr = line.split("\t");
-
                             dfMap.put(arr[0],Integer.parseInt(arr[1].trim().toString()));
                         }
                         br.close();
-                        fr.close();
+                        dis.close();
+                        fsin.close();
                     }
                 }
             }
@@ -81,11 +88,12 @@ public class MyMapper3 extends Mapper<LongWritable, Text,Text, Text> {
                 String userId  = arr[1];
 
                 //calculate the weight : W = TF*Log(N/DF)
-                double result = tf*Math.log(countMap.get("count")/dfMap.get(word));
-                NumberFormat nf = NumberFormat.getInstance();
-                nf.setMaximumFractionDigits(5);
-
-                context.write(new Text(word),new Text(word+":"+nf.format(result)));
+                if(dfMap.get(word)!=null) {
+                    double result = tf*Math.log(countMap.get("count")/dfMap.get(word));
+                    NumberFormat nf = NumberFormat.getInstance();
+                    nf.setMaximumFractionDigits(5);
+                    context.write(new Text(word),new Text(userId+":"+nf.format(result)));
+                }
             }
 
         }

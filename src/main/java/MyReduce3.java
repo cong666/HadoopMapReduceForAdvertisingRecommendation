@@ -10,21 +10,17 @@ import java.util.Iterator;
 /**
  * Created by: ccong
  * Date: 18/9/16 下午10:01
- * 计算DF:某个词汇在所有微博中出现的次数
- * 九阳 3
  */
-public class MyReduce3 extends Reducer<Text, IntWritable,Text,IntWritable> {
+public class MyReduce3 extends Reducer<Text, Text,Text,Text> {
     Logger logger = LoggerFactory.getLogger(MyReduce3.class);
 
-    protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-        Iterator<IntWritable> value = values.iterator();
+    protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
+        Iterator<Text> value = values.iterator();
 
-        int sum = 0;
+        //just output , there is no merge here
         while(value.hasNext()) {
-            IntWritable v = value.next();
-            sum = sum+v.get();
+            Text t = value.next();
+            context.write(key,t);
         }
-        //计算DF
-        context.write(key,new IntWritable(sum));
     }
 }
